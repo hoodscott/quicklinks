@@ -5,12 +5,32 @@
 
   let data = <ICategory> template;
   let edit: boolean = false;
+
+  function beginEdit() {
+    edit = true;
+  }
+
+  function cancelEdit() {
+    edit = false;
+  }
+
+  function saveEdit() {
+    edit = false;
+    console.log("todo - save stuff here");
+  }
 </script>
 
 <header>
   <h1>Quicklinks</h1>
-  <!-- <label>Edit <input type="checkbox" bind:checked={edit}/></label>
-  <div><button>Save</button></div> -->
+  
+  <div class="button-holder">
+    {#if edit}
+      <button on:click="{saveEdit}" class="positive">Save</button>
+      <button on:click="{cancelEdit}">Cancel</button>
+    {:else}
+      <button on:click="{beginEdit}">Edit</button>
+    {/if}
+  </div>
 </header>
 
 <main>

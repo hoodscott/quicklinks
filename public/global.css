@@ -48,13 +48,17 @@ button {
   outline: none;
   cursor: pointer;
 }
-
 button:disabled {
   color: #999;
 }
-
 button:not(:disabled):active {
   background-color: #ddd;
+}
+button.positive {
+  background-color: hsl(240, 50%, 15%);
+}
+button.negative {
+  background-color: hsl(0, 50%, 15%);
 }
 
 *:focus {

@@ -12,7 +12,9 @@ Links can be opened in new or in same tab.  Links in same Category can be opened
 
 1. ~~Add CSS~~
 
-1. How should the JSON data be edited/stored?  Edit JSON, recompile svelte component?  Maybe svelte is not best choice.
+1. How do we communicate the deletions between components?  For example if child component is deleted, then parent is updated in unrelated way, parent will recreate child.
+
+1. Switch from using JSON template file to storing JSON in localstorage (maybe template can be used as backup)
 
 1. Can this be converted to Firefox/Chrome extension?  Maybe new tab page replacement or use browser's bookmarks?  Where would the data be stored (bookmark folders could be Categories, bookmarks could be links, but what about poll)?
 
