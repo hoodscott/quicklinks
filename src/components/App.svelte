@@ -34,7 +34,7 @@
 </header>
 
 <main>
-  <Category category={data} {edit} recursiveCategory={false}/>
+  <Category bind:category={data} {edit} recursiveCategory={false}/>
 </main>
 
 <footer>

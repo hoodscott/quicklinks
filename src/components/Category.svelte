@@ -6,6 +6,12 @@
   export let edit: boolean;
   export let recursiveCategory: boolean = true;
 
+  $: category, tidyNulls();
+
+  function tidyNulls() {
+    category.categories = category.categories.filter(cat => cat != null);
+  }
+
   let newLinkLink: string = '';
   let newLinkDesc: string = '';
   let newCatDesc: string = '';
@@ -18,10 +24,10 @@
 
   function openAll(cat: ICategory): void {
     cat.links.forEach((link) => {
-      console.log("open link here: ", link.link);
       window.open(link.link, "_blank");
     });
-
+    
+    /* Recursively open all links in subcategories */
     cat.categories.forEach((subCat) => {
       openAll(subCat);
     });
@@ -79,6 +85,7 @@
 
 {#if category}
   <section class:recursiveCategory style="{inlineColour}">
+    <button on:click="{()=>console.log(category)}">Log</button>
     {#if recursiveCategory}
       <header>
         <h2>{category.desc}</h2>
@@ -119,13 +126,13 @@
       <div class="categories">
         {#each category.categories as subCat}
           {#if subCat != null}
-            <svelte:self category={subCat} {edit} />
+            <svelte:self bind:category={subCat} {edit} />
           {/if}
         {/each}
       </div>
     {/if}
 
-    {#if !recursiveCategory}
+    {#if !recursiveCategory && edit}
     <div class="root-add">
       <input bind:value={newCatDesc} />
       <button type="button" on:click={addCategory}>New Category</button>

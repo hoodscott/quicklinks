@@ -12,7 +12,7 @@ Links can be opened in new or in same tab.  Links in same Category can be opened
 
 1. ~~Add CSS~~
 
-1. How do we communicate the deletions between components?  For example if child component is deleted, then parent is updated in unrelated way, parent will recreate child.
+1. ~~How do we communicate the deletions between components?  For example if child component is deleted, then parent is updated in unrelated way, parent will recreate child.~~
 
 1. Switch from using JSON template file to storing JSON in localstorage (maybe template can be used as backup)
 
