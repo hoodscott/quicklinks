@@ -1,10 +1,10 @@
-<script lang='ts'>
-  import template from '../template.json';
-  import type { ICategory } from '../Types';
-  import Category from './Category.svelte';
+<script lang="ts">
+  import template from "../template.json";
+  import type { ICategory } from "../Types";
+  import Category from "./Category.svelte";
   import { fade } from "svelte/transition";
 
-  let data: ICategory = getDataFromLocalStorage() || <ICategory> template;
+  let data: ICategory = getDataFromLocalStorage() || <ICategory>template;
   let edit: boolean = false;
   let justSaved: boolean = false;
 
@@ -24,7 +24,7 @@
 
   function saveEdit() {
     edit = false;
-    window.localStorage.setItem('cat', JSON.stringify(data));
+    window.localStorage.setItem("cat", JSON.stringify(data));
     justSaved = true;
     setTimeout(() => {
       justSaved = false;
@@ -38,19 +38,19 @@
   {#if justSaved}
     <span out:fade>Saved!</span>
   {/if}
-  
+
   <div class="button-holder">
     {#if edit}
-      <button type="button" on:click="{saveEdit}" class="positive">Save</button>
-      <button type="button" on:click="{cancelEdit}">Cancel</button>
+      <button type="button" on:click={saveEdit} class="positive">Save</button>
+      <button type="button" on:click={cancelEdit}>Cancel</button>
     {:else}
-      <button type="button" on:click="{beginEdit}">Edit</button>
+      <button type="button" on:click={beginEdit}>Edit</button>
     {/if}
   </div>
 </header>
 
 <main>
-  <Category bind:category={data} {edit} recursiveCategory={false}/>
+  <Category bind:category={data} {edit} recursiveCategory={false} />
 </main>
 
 <footer>
@@ -65,7 +65,8 @@
   header h1 {
     flex: 1;
   }
-  header, footer {
+  header,
+  footer {
     padding: 0 1em;
     background-color: #222;
     color: #eee;

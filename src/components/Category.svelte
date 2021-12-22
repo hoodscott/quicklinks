@@ -11,9 +11,9 @@
   $: category, tidyNulls();
 
   function tidyNulls() {
-    category.categories = category.categories.filter(cat => cat != null);
+    category.categories = category.categories.filter((cat) => cat != null);
   }
-  
+
   function generateColour(): string {
     const randHue = Math.floor(Math.random() * 360);
     return `background-color:hsl(${randHue},40%,10%);`;
@@ -23,7 +23,7 @@
     cat.links.forEach((link) => {
       window.open(link.link, "_blank");
     });
-    
+
     /* Recursively open all links in subcategories */
     cat.categories.forEach((subCat) => {
       openAll(subCat);
@@ -42,7 +42,7 @@
         categories: [],
         links: [],
         desc: catNew,
-        poll: false
+        poll: false,
       };
       category.categories.push(newCategory);
 
@@ -67,7 +67,7 @@
     if (linkNewLink && linkNewDesc) {
       const newLink: ILink = {
         link: linkNewLink,
-        desc: linkNewDesc
+        desc: linkNewDesc,
       };
       category.links.push(newLink);
 
@@ -84,51 +84,78 @@
   function removeCategory() {
     category = null;
   }
-  
+
   function removeLink(index: number) {
     category.links.splice(index, 1);
-    category=category;
+    category = category;
   }
 </script>
 
 {#if category}
-  <section class:recursiveCategory style="{inlineColour}">
+  <section class:recursiveCategory style={inlineColour}>
     {#if recursiveCategory}
       <header>
         <h2>{category.desc}</h2>
         <div>
           {#if !edit}
-            <button type="button" on:click={() => openAll(category)}>Open All</button>
+            <button type="button" on:click={() => openAll(category)}
+              >Open All</button
+            >
           {:else}
-            <button type="button" on:click={removeCategory} class="negative">Remove</button>
+            <button type="button" on:click={removeCategory} class="negative"
+              >Remove</button
+            >
           {/if}
         </div>
       </header>
 
       <ul>
         {#each category.links as link, index}
-          <li><Link {link} />
+          <li>
+            <Link {link} />
             {#if edit}
-              <button type="button" on:click="{() => removeLink(index)}" class="negative">Remove</button>
+              <button
+                type="button"
+                on:click={() => removeLink(index)}
+                class="negative">Remove</button
+              >
             {/if}
           </li>
         {/each}
       </ul>
 
       {#if edit}
-        <form on:submit|preventDefault="{addLink}" class="add-link">
-          <input type="url" required name="link" placeholder="Hyperlink" autocomplete="off"/>
-          <input type="text" required name="desc" placeholder="Link Description" autocomplete="off"/>
+        <form on:submit|preventDefault={addLink} class="add-link">
+          <input
+            type="url"
+            required
+            name="link"
+            placeholder="Hyperlink"
+            autocomplete="off"
+          />
+          <input
+            type="text"
+            required
+            name="desc"
+            placeholder="Link Description"
+            autocomplete="off"
+          />
           <button type="submit">Add New Link</button>
         </form>
 
-        <form on:submit|preventDefault="{addCategory}">
-          <input type="text" required name="desc" placeholder="Category Name" autocomplete="off"/>
+        <form on:submit|preventDefault={addCategory}>
+          <input
+            type="text"
+            required
+            name="desc"
+            placeholder="Category Name"
+            autocomplete="off"
+          />
           <button type="submit">Add New Category</button>
         </form>
       {/if}
     {/if}
-    
+
     {#if category.categories.length}
       <div class="categories">
         {#each category.categories as subCat}
@@ -140,8 +167,14 @@
     {/if}
 
     {#if !recursiveCategory && edit}
-      <form on:submit|preventDefault="{addCategory}" class="root-add">
-        <input type="text" required name="desc" placeholder="Category Name" autocomplete="off"/>
+      <form on:submit|preventDefault={addCategory} class="root-add">
+        <input
+          type="text"
+          required
+          name="desc"
+          placeholder="Category Name"
+          autocomplete="off"
+        />
         <button type="submit">Add New Category</button>
       </form>
     {/if}
@@ -173,7 +206,7 @@
     padding-inline-start: 1em;
   }
   li button {
-    margin-left:1em;
+    margin-left: 1em;
   }
 
   .categories {
