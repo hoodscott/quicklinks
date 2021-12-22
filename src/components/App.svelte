@@ -25,10 +25,10 @@
   
   <div class="button-holder">
     {#if edit}
-      <button on:click="{saveEdit}" class="positive">Save</button>
-      <button on:click="{cancelEdit}">Cancel</button>
+      <button type="button" on:click="{saveEdit}" class="positive">Save</button>
+      <button type="button" on:click="{cancelEdit}">Cancel</button>
     {:else}
-      <button on:click="{beginEdit}">Edit</button>
+      <button type="button" on:click="{beginEdit}">Edit</button>
     {/if}
   </div>
 </header>

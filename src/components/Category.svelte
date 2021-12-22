@@ -6,16 +6,13 @@
   export let edit: boolean;
   export let recursiveCategory: boolean = true;
 
+  let inlineColour: string = generateColour();
+
   $: category, tidyNulls();
 
   function tidyNulls() {
     category.categories = category.categories.filter(cat => cat != null);
   }
-
-  let newLinkLink: string = '';
-  let newLinkDesc: string = '';
-  let newCatDesc: string = '';
-  let inlineColour: string = generateColour();
   
   function generateColour(): string {
     const randHue = Math.floor(Math.random() * 360);
@@ -33,19 +30,24 @@
     });
   }
 
-  function addCategory() {
+  function addCategory(event: Event) {
+    /* Read data from form */
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const catNew = formData.get("desc").toString();
+
     /* New category is valid */
-    if (newCatDesc) {
+    if (catNew) {
       const newCategory: ICategory = {
         categories: [],
         links: [],
-        desc: newCatDesc,
+        desc: catNew,
         poll: false
       };
       category.categories.push(newCategory);
 
       /* Reset form */
-      newCatDesc = "";
+      form.reset();
 
       /* Trigger refresh */
       category = category;
@@ -54,18 +56,23 @@
     }
   }
 
-  function addLink() {
+  function addLink(event: Event) {
+    /* Read data from form */
+    const form = event.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const linkNewLink = formData.get("link").toString();
+    const linkNewDesc = formData.get("desc").toString();
+
     /* New link is valid */
-    if (newLinkLink && newLinkDesc) {
+    if (linkNewLink && linkNewDesc) {
       const newLink: ILink = {
-        link: newLinkLink,
-        desc: newLinkDesc
+        link: linkNewLink,
+        desc: linkNewDesc
       };
       category.links.push(newLink);
 
       /* Reset form */
-      newLinkLink = "";
-      newLinkDesc = "";
+      form.reset();
 
       /* Trigger refresh */
       category = category;
@@ -77,7 +84,8 @@
   function removeCategory() {
     category = null;
   }
-  function removeLink(index) {
+  
+  function removeLink(index: number) {
     category.links.splice(index, 1);
     category=category;
   }
@@ -85,7 +93,6 @@
 
 {#if category}
   <section class:recursiveCategory style="{inlineColour}">
-    <button on:click="{()=>console.log(category)}">Log</button>
     {#if recursiveCategory}
       <header>
         <h2>{category.desc}</h2>
@@ -109,16 +116,16 @@
       </ul>
 
       {#if edit}
-        <div>
-          <input bind:value={newLinkLink} />
-          <input bind:value={newLinkDesc} />
-          <button type="button" on:click={addLink}>New Link</button>
-        </div>
+        <form on:submit|preventDefault="{addLink}" class="add-link">
+          <input type="url" required name="link" placeholder="Hyperlink"/>
+          <input type="text" required name="desc" placeholder="Link Description"/>
+          <button type="submit">Add New Link</button>
+        </form>
 
-        <div>
-          <input bind:value={newCatDesc} />
-          <button type="button" on:click={addCategory}>New Category</button>
-        </div>
+        <form on:submit|preventDefault="{addCategory}">
+          <input type="text" required name="desc" placeholder="Category Name"/>
+          <button type="submit">Add New Category</button>
+        </form>
       {/if}
     {/if}
     
@@ -133,10 +140,10 @@
     {/if}
 
     {#if !recursiveCategory && edit}
-    <div class="root-add">
-      <input bind:value={newCatDesc} />
-      <button type="button" on:click={addCategory}>New Category</button>
-    </div>
+      <form on:submit|preventDefault="{addCategory}" class="root-add">
+        <input type="text" required name="desc" placeholder="Category Name"/>
+        <button type="submit">Add New Category</button>
+      </form>
     {/if}
   </section>
 {/if}
@@ -178,5 +185,19 @@
   }
   .root-add {
     padding: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    max-width: 420px;
+  }
+  form.add-link {
+    margin-bottom: 1em;
+  }
+  form button {
+    align-self: flex-end;
   }
 </style>
