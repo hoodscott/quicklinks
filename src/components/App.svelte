@@ -34,6 +34,9 @@
     background-color: #222;
     color: #eee;
   }
+  main {
+    flex: 1;
+  }
   footer div {
     padding: 1em;
     text-align: center;
