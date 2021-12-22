@@ -2,9 +2,17 @@
   import template from '../template.json';
   import type { ICategory } from '../Types';
   import Category from './Category.svelte';
+  import { fade } from "svelte/transition";
 
-  let data = <ICategory> template;
+  let data: ICategory = getDataFromLocalStorage() || <ICategory> template;
   let edit: boolean = false;
+  let justSaved: boolean = false;
+
+  function getDataFromLocalStorage(): ICategory {
+    const x = window.localStorage.getItem("cat");
+    if (!x) return null;
+    return JSON.parse(x);
+  }
 
   function beginEdit() {
     edit = true;
@@ -16,12 +24,20 @@
 
   function saveEdit() {
     edit = false;
-    console.log("todo - save stuff here");
+    window.localStorage.setItem('cat', JSON.stringify(data));
+    justSaved = true;
+    setTimeout(() => {
+      justSaved = false;
+    }, 4);
   }
 </script>
 
 <header>
   <h1>Quicklinks</h1>
+
+  {#if justSaved}
+    <span out:fade>Saved!</span>
+  {/if}
   
   <div class="button-holder">
     {#if edit}
@@ -53,6 +69,7 @@
     padding: 0 1em;
     background-color: #222;
     color: #eee;
+    gap: 1em;
   }
   main {
     flex: 1;

@@ -117,13 +117,13 @@
 
       {#if edit}
         <form on:submit|preventDefault="{addLink}" class="add-link">
-          <input type="url" required name="link" placeholder="Hyperlink"/>
-          <input type="text" required name="desc" placeholder="Link Description"/>
+          <input type="url" required name="link" placeholder="Hyperlink" autocomplete="off"/>
+          <input type="text" required name="desc" placeholder="Link Description" autocomplete="off"/>
           <button type="submit">Add New Link</button>
         </form>
 
         <form on:submit|preventDefault="{addCategory}">
-          <input type="text" required name="desc" placeholder="Category Name"/>
+          <input type="text" required name="desc" placeholder="Category Name" autocomplete="off"/>
           <button type="submit">Add New Category</button>
         </form>
       {/if}
@@ -141,7 +141,7 @@
 
     {#if !recursiveCategory && edit}
       <form on:submit|preventDefault="{addCategory}" class="root-add">
-        <input type="text" required name="desc" placeholder="Category Name"/>
+        <input type="text" required name="desc" placeholder="Category Name" autocomplete="off"/>
         <button type="submit">Add New Category</button>
       </form>
     {/if}
