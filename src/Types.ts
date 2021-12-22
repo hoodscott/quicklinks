@@ -1,11 +1,11 @@
-export interface Link {
+export interface ILink {
   link: string;
   desc: string;
 }
 
-export interface CategoryT {
+export interface ICategory {
   desc: string;
-  categories: CategoryT[];
-  links: Link[];
+  categories: ICategory[];
+  links: ILink[];
   poll: boolean;
 }

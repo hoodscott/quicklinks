@@ -8,11 +8,13 @@ Links can be opened in new or in same tab.  Links in same Category can be opened
 
 1. ~~Convert simple JSON object to links on screen.  Has buttons to open whole Categories.~~
 
-2. Implement poll boolean.  Can only really check if server is responding due to CORS.
+1. ~~Implement poll boolean.  Can only really check if server is responding due to CORS.~~
 
-3. Store JSON in localstorage and add editor.  User should not need to know JSON.
+1. ~~Add CSS~~
 
-4. Can this be converted to Firefox/Chrome extension?  Maybe new tab page replacement or use browser's bookmarks?  Where would the data be stored (bookmark folders would be Categories, bookmarks would be links, but what about poll)?
+1. How should the JSON data be edited/stored?  Edit JSON, recompile svelte component?  Maybe svelte is not best choice.
+
+1. Can this be converted to Firefox/Chrome extension?  Maybe new tab page replacement or use browser's bookmarks?  Where would the data be stored (bookmark folders could be Categories, bookmarks could be links, but what about poll)?
 
 ## JSON format
 
